@@ -1,0 +1,29 @@
+{
+  "name": "support-ticketing-system",
+  "version": "1.0.0",
+  "description": "Support Ticket Application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "server": "nodemon src/server.js",
+    "client": "npm run start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "cd frontend && npm install && npm run build"
+  },
+  "repository": {},
+  "license": "MIT",
+  "dependencies": {
+    "@splinetool/react-spline": "^2.2.6",
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "concurrently": "^7.0.0",
+    "dotenv": "^14.3.2",
+    "express": "^4.17.2",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
