@@ -42,13 +42,16 @@ const getSingleTicket = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not found");
   }
+
   const ticket = await Ticket.findById(req.params.id);
   if (!ticket) {
     res.status(404);
     throw new Error("Ticket not found");
   }
-  if (ticket.user.toString() !== req.user.id) {
-    res.status(404);
+
+  // Check if the user is the owner or an admin
+  if (!(ticket.user.toString() === req.user.id || user.isAdmin)) {
+    res.status(403);
     throw new Error("Not Authorized");
   }
   res.status(200).json(ticket);
