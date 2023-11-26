@@ -1,26 +1,28 @@
-const express = require('express')
+const express = require("express");
 const {
   getTickets,
   createTickets,
   getSingleTicket,
   deleteTicket,
   updateTicket,
-} = require('../controllers/ticketController')
-const router = express.Router()
+  getAllTickets,
+} = require("../controllers/ticketController");
+const router = express.Router();
 
+const { protect, isAdmin } = require("../middleware/authMiddleware");
+const noteRouter = require("./noteRoutes");
 
-const { protect } = require('../middleware/authMiddleware')
+router.use("/:ticketId/notes", noteRouter);
 
-const noteRouter = require('./noteRoutes')
+// Route to get all tickets (for admin users only)
+router.route("/all").get(protect, isAdmin, getAllTickets);
 
-router.use('/:ticketId/notes', noteRouter)
-
-
-router.route('/').get(protect, getTickets).post(protect, createTickets)
+router.route("/").get(protect, getTickets).post(protect, createTickets);
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(protect, getSingleTicket)
   .delete(protect, deleteTicket)
-  .put(protect, updateTicket)
-module.exports = router
+  .put(protect, updateTicket);
+
+module.exports = router;
